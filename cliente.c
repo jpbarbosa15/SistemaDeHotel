@@ -1,4 +1,5 @@
 #include "cliente.h"
+#include "tempo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,7 +57,7 @@ int lerClientesCSV( CLIENTE *lista )
             int campoAtual = 0;
             while (campos != NULL)
             {
-                printf(" %s\n", campos);
+                
                 switch (campoAtual)
                 {
                 case CPF_CLI:
@@ -127,7 +128,7 @@ CLIENTE buscarClientePorCPF(char *CPF, CLIENTE *l, int qtde)
     int i = 0 ;
     while(i < qtde && !achou )     
     {
-        printf("CPF: %s\n", l[i].CPF);
+        
         if (strcmp(CPF, l[i].CPF) == 0 )
         {
             achou = true;
@@ -138,3 +139,93 @@ CLIENTE buscarClientePorCPF(char *CPF, CLIENTE *l, int qtde)
     }
     return c;    
 }
+
+
+void lerCliente(CLIENTE *c)
+{
+    char data[14];
+    printf("Digite o CPF: ");
+    scanf("%s", c->CPF);
+    printf("Digite o Nome: ");
+    scanf(" %[^\n]s", c->nome);
+    printf("Digite a Data de Nascimento (dd/mm/aaaa): ");
+    scanf(" %[^\n]s", data);
+    printf("Digite a Idade: ");
+    scanf("%d", &c->idade);
+    printf("Digite o Endereço: ");
+    scanf(" %[^\n]s", c->endereco);
+    printf("Digite a Cidade: ");
+    scanf(" %[^\n]s", c->cidade);
+    printf("Digite o Estado: ");
+    scanf(" %[^\n]s", c->estado);
+
+    StringToData(data, &c->dataNascimento);
+
+}
+
+void gravarClienteCSV(CLIENTE c)
+{   
+    char Data[50];
+    char nomeArquivo[] = "Clientes.csv";
+    FILE *csv;
+    csv = fopen(nomeArquivo, "r+w");
+    if (csv == NULL)
+    {
+        // arquivo não existe, será criado
+        csv = fopen(nomeArquivo, "a");
+        fprintf(csv, "CPF;Nome;DataNascimento;Idade;Endereco;Cidade;Estado\n");
+        fflush(csv);
+    } else
+        fseek(csv, 0, SEEK_END);
+    // arquivo ja existe, insere apenas o dado no final do arquivo
+    DataToString(c.dataNascimento, Data, false);
+    
+    fprintf(csv, "%s;%s;%s;%d;%s;%s;%s\n",
+        c.CPF, c.nome, Data, c.idade, c.endereco, c.cidade, c.estado);
+    fflush(csv);
+    fclose(csv);
+    
+}
+
+
+void AlterarCliente(char *CPF)
+{
+    CLIENTE lista[100];
+    int qtde = lerClientesCSV(lista);
+    deletarCliente(CPF);
+    CLIENTE c = buscarClientePorCPF(CPF, lista, qtde);
+    if (strcmp(c.CPF, "0") != 0)
+    {
+        exibirCliente(c);
+        printf("Digite o novo Endereço: ");
+        scanf(" %[^\n]s", c.endereco);
+        printf("Digite a nova Cidade: ");
+        scanf(" %[^\n]s", c.cidade);
+        printf("Digite o novo Estado: ");
+        scanf(" %[^\n]s", c.estado);
+        gravarClienteCSV(c);
+    }
+    else
+    {
+        printf("\n");
+        printf("Cliente não encontrado\n");
+        printf("\n");
+    }
+}
+
+
+void deletarCliente(char *CPF)
+{
+    CLIENTE lista[100];
+    int qtde = lerClientesCSV(lista);
+    remove("Clientes.csv");
+    for (int i = 0; i < qtde; i++)
+    {
+        if (strcmp(CPF, lista[i].CPF) != 0)
+        {
+            gravarClienteCSV(lista[i]);
+        }
+    }
+    
+}
+

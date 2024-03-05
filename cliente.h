@@ -47,5 +47,32 @@ void exibirCliente(CLIENTE c);
 */
 CLIENTE buscarClientePorCPF(char *CPF, CLIENTE *l, int qtde);
 
+/**
+ * Rotina que lê os dados de um cliente através do teclado
+ * @param c Ponteiro para um registro do tipo CLIENTE, 
+ * onde os dados lidos serão armazenados 
+*/
+void lerCliente(CLIENTE *c);
+
+/**
+ * Gravando os dados de um cliente no final do arquivo. Caso o arquivo
+ * não exista, gera um novo arquivo com as colunas que são o cabeçalho
+ * @param c Cliente que será salvo no arquivo
+*/
+void gravarClienteCSV(CLIENTE c);
+
+/**
+ * Função que Altera um cliente do arquivo
+ * @param CPF CPF do cliente que será Alterado
+*/
+void AlterarCliente(char *CPF);
+
+
+/**
+ * Função que deleta um cliente do arquivo
+ * @param CPF CPF do cliente que será deletado
+*/
+void deletarCliente(char *CPF);
+
 
 #endif

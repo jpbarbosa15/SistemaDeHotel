@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
             // menuReserva();
             break;
         case 2:
-            // menuClientes();
+            menuClientes();
             break;
         case 3:
             // menuHospedagem();

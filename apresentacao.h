@@ -16,5 +16,7 @@ int MenuPrincipal();
 
 void menuQuartos();
 
+void menuClientes();
+
 
 #endif
