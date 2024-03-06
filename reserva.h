@@ -118,4 +118,11 @@ int quantidadeReservasDAT( );
  */
 int lerReservasDAT(RESERVA *lista);
 
+/**
+* Rotina que faz a listagem dos quartos disponiveis para reserva com base na data de checkin e checkout
+* @param checkin Data de entrada do cliente
+* @param checkout Data de saída do cliente 
+*/
+void listarQuartosDisponiveisComBaseNaData(DATA checkin, DATA checkout);
+
 #endif

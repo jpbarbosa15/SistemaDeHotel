@@ -41,7 +41,8 @@ void lerQuarto( QUARTO *p )
  * @param p Registro que será exibido
  */
 void exibirQuarto(QUARTO p)
-{
+{   
+    printf("\n");
     separador();
     printf("Exibindo um quarto \n");
     printf("Idenficador do quarto: ");
@@ -59,6 +60,7 @@ void exibirQuarto(QUARTO p)
     else
         printf("Indisponível\n");
     separador();
+    printf("\n");
 }
 
 

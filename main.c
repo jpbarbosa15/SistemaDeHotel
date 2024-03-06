@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
         switch (opcao)
         {
         case 1:
-            // menuReserva();
+            menuReserva();
             break;
         case 2:
             menuClientes();

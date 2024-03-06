@@ -3,6 +3,8 @@
 #include "apresentacao.h"
 #include "quarto.h"
 #include "cliente.h"
+#include "tempo.h"
+#include "reserva.h"
 
 const int TAM_SEPARADOR = 40;
 
@@ -112,7 +114,58 @@ void menuClientes(){
     default:
         break;
     }
-
-
-
+   
 }
+
+
+
+void menuReserva(){
+        system("clear");
+        int opcao = 0;
+        printf("1. Quartos Disponiveis Para Reserva\n2. Reservar Quarto\n3. Cancelar Reserva\n4. Buscar Reserva\n9. Sair\n");
+        separador();
+        printf("\nOpção -> ");
+        scanf("%d", &opcao);
+        switch (opcao)
+        {
+        case 1:
+            system("clear");
+            DATA entrada, saida;
+            printf("Digite a data de entrada (dd/mm/aaaa): ");
+            scanf("%d/%d/%d", &entrada.dia, &entrada.mes, &entrada.ano);
+            printf("Digite a data de saida (dd/mm/aaaa): ");
+            scanf("%d/%d/%d", &saida.dia, &saida.mes, &saida.ano);
+            listarQuartosDisponiveisComBaseNaData(entrada, saida);
+            break;
+        case 2:
+            system("clear");
+            RESERVA r;
+            char cpf[16], tipoquarto[10], checkinchar[50], checkoutchar[50];
+            DATA checkin, checkout;
+            bool verificacao;
+            printf("Digite o CPF do cliente: ");
+            scanf("%s", cpf);
+            printf("Digite o tipo do quarto: ");
+            scanf("%s", tipoquarto);
+            printf("Digite a data de entrada (dd/mm/aaaa): ");
+            scanf("%s", checkinchar);
+            printf("Digite a data de saida (dd/mm/aaaa): ");
+            scanf("%s", checkoutchar);
+            StringToData(checkinchar, &checkin);
+            StringToData(checkoutchar, &checkout);
+            verificacao = reservarQuarto(cpf, tipoquarto, checkin, checkout, &r);
+            if (verificacao == true){
+                gravarReservaCSV(r);
+            }
+            
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 9:
+            break;        
+        default:
+            break;
+        }
+    }

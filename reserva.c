@@ -103,7 +103,7 @@ int lerReservasCSV( RESERVA *lista )
             int campoAtual = 0;
             while (campos != NULL)
             {
-                printf(" %s\n", campos);
+                
                 switch (campoAtual)
                 {
                 case ID_RESERVA: 
@@ -251,12 +251,13 @@ bool reservarQuarto(char *CPF, char *tipoQuarto, DATA checkin, DATA checkout, RE
         }
 
         return QuartoEncontrado;
-
     }
     else
-    {
-        printf("Cliente não encontrado.\n ");
+    {   
+        printf("\n");
+        printf("Cliente não encontrado.\n");
         printf("Cadastre o cliente antes de fazer a reserva\n");
+        printf("\n");
         return false;
     }
 }
@@ -278,7 +279,7 @@ int gravarReservaCSV(RESERVA r)
     if (csv == NULL)
     {
         // arquivo não existe, será criado
-        printf("Criando arquivo %s\n", nomeArquivoCSV);
+        
         csv = fopen(nomeArquivoCSV, "a");
         fprintf(csv, "IdReserva; CPF; Checkin; Checkout;TipoQuarto;IdQuarto;Status\n");
         fflush(csv);
@@ -367,3 +368,52 @@ int lerReservasDAT(RESERVA *lista)
         return -1;
     }
 }
+
+
+void listarQuartosDisponiveisComBaseNaData(DATA checkin, DATA checkout)
+{
+    RESERVA *lReservas;
+    int qReservas = quantidadeReservasCSV();
+    lReservas = (RESERVA *) malloc(sizeof(RESERVA) * qReservas);
+    lerReservasCSV(lReservas);
+    QUARTO *lQuartos;
+    int qQuartos = quantidadeQuartosCSV();
+    lQuartos = (QUARTO *) malloc(sizeof(QUARTO) * qQuartos);
+    lerQuartosCSV(lQuartos);
+    int qReservados = 0;
+    RESERVA *ReservadosNoPeriodo;
+    ReservadosNoPeriodo = (RESERVA *) malloc(sizeof(RESERVA) * qReservas);
+    for (int i = 0; i < qReservas; i++)
+    {
+        bool flag = verificaSobreposicaoReserva(checkin, checkout, lReservas[i].checkin, lReservas[i].checkout);
+        if (flag == false)
+        {
+            ReservadosNoPeriodo[qReservados] = lReservas[i];
+            qReservados++;
+        }
+    }
+    for (int i = 0; i < qQuartos; i++)
+    {
+        int r = 0;
+        int c = 0;
+        while (r < qReservados && c == 0)
+        {
+            if (lQuartos[i].id == ReservadosNoPeriodo[r].idQuarto)
+                c++;
+            r++;
+        }
+        if (c == 0)
+        {
+            printf("ID: %d\n", lQuartos[i].id);
+            printf("Tipo: %s\n", lQuartos[i].tipoQuarto);
+            printf("Quantidade de camas de casal: %d\n", lQuartos[i].camasCasal);
+            printf("Quantidade de camas de solteiro: %d\n", lQuartos[i].camasSolteiro);
+            printf("Valor da diária: %.2f\n", lQuartos[i].valorDiaria);
+            printf("-------------------------------\n");
+        }
+    }
+    free(lReservas);
+    free(lQuartos);
+    free(ReservadosNoPeriodo);
+}
+    

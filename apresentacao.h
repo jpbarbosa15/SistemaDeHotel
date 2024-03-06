@@ -18,5 +18,7 @@ void menuQuartos();
 
 void menuClientes();
 
+void menuReserva();
+
 
 #endif
