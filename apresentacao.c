@@ -5,6 +5,7 @@
 #include "cliente.h"
 #include "tempo.h"
 #include "reserva.h"
+#include "hospedagem.h"
 
 const int TAM_SEPARADOR = 40;
 
@@ -190,3 +191,33 @@ void menuReserva(){
             break;
         }
     }
+
+
+void menuHospedagem(){
+    system("clear");
+    int opcao = 0;
+    printf("1. Checkin\n2. Checkout\n3. Buscar Hospedagens\n9. Sair\n");
+    separador();
+    printf("\nOpção -> ");
+    scanf("%d", &opcao);
+    switch (opcao)
+    {
+    case 1:
+        system("clear");
+        int id;
+        printf("Digite o id da reserva para fazer o checkin: ");
+        scanf("%d", &id);
+        checkinHospedagem(id);
+        break;
+    case 2:
+        
+        break;
+    case 3:
+        
+        break;
+    case 9:
+        break;        
+    default:
+        break;
+    }
+}

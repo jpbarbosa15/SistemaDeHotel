@@ -504,3 +504,29 @@ void ListarReservaCliente(char *cpf)
     
     free(lReservas);
 }
+
+
+bool BuscarReservaID(int id, RESERVA *r)
+{
+    RESERVA *lReservas;
+    int qReservas = quantidadeReservasCSV();
+    lReservas = (RESERVA *) malloc(sizeof(RESERVA) * qReservas);
+    lerReservasCSV(lReservas);
+    for (int i = 0; i < qReservas; i++)
+    {
+        if (lReservas[i].id == id)
+        {
+            r->id = lReservas[i].id;
+            r->checkin = lReservas[i].checkin;
+            r->checkout = lReservas[i].checkout;
+            r->idQuarto = lReservas[i].idQuarto;
+            strcpy(r->CPF, lReservas[i].CPF);
+            strcpy(r->tipoQuarto, lReservas[i].tipoQuarto);
+            strcpy(r->status, lReservas[i].status);
+            free(lReservas);
+            return true;
+        }
+    }
+    return false;
+    
+}

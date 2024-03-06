@@ -20,5 +20,6 @@ void menuClientes();
 
 void menuReserva();
 
+void menuHospedagem();
 
 #endif

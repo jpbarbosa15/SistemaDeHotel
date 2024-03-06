@@ -105,4 +105,7 @@ void AlterarQuarto(int id);
 */
 void deletarQuarto(int id);
 
+
+void AlterarStatusQuarto(int id, bool status);
+
 #endif

@@ -351,3 +351,26 @@ void deletarQuarto(int id)
     }
     
 }
+
+
+void AlterarStatusQuarto(int id, bool status)
+{
+    QUARTO *lista;
+    int qtdQuartos = quantidadeQuartosCSV();
+    lista = (QUARTO *)malloc(qtdQuartos * sizeof(QUARTO));
+    lerQuartosCSV(lista);
+    deletarQuarto(id);
+    for (int i = 0; i < qtdQuartos; i++)
+    {
+        if (lista[i].id == id)
+        {
+            lista[i].status = status;
+            gravarQuartoCSV(lista[i]);
+        }
+        
+        
+    }
+    
+    free(lista);
+    
+}

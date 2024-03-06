@@ -144,4 +144,12 @@ void cancelarReservaPorCPFeDAta(char *cpf, DATA checkin);
 */
 void ListarReservaCliente(char *cpf);
 
+/*
+* Rotina que busca uma reserva com base no ID
+* @param id Identificação da reserva que será buscada
+* @param r Ponteiro para a reserva que será retornada
+* @return Retorna true se a reserva foi encontrada e false caso contrário    
+*/
+bool BuscarReservaID(int id, RESERVA *r);
+
 #endif

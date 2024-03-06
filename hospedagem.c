@@ -3,6 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 #include "hospedagem.h"
+#include "tempo.h"
+#include "reserva.h"
+#include "quarto.h"
 
 int quantidadeHospedagensCSV()
 {
@@ -117,4 +120,52 @@ void exibirHospedagem(HOSPEDAGEM h)
    printf("Valor total: R$%.2f\n", h.precoTotal);   
    printf("------------------------------------- \n");
    printf("##################################### \n");
+}
+
+
+void GravarHospedagemCSV(HOSPEDAGEM h)
+{
+    FILE *csv;
+    char nomeArquivo[] = "Hospedagens.csv";
+    csv = fopen(nomeArquivo, "a");
+    if (csv != NULL)
+    {
+        char temp[12];
+        fprintf(csv, "%d;%s;", h.id, h.CPF);
+        DataToString(h.checkin, temp, false);
+        fprintf(csv, "%s;", temp);
+        DataToString(h.checkout, temp, false);
+        fprintf(csv, "%s;%s;%.2f\n", temp, h.status, h.precoTotal);
+        fclose(csv);
+    }
+    else
+    {
+        printf("Erro - Arquivo %s não encontrado\n", nomeArquivo);
+    }
+}
+
+
+
+void checkinHospedagem(int id)
+{
+    bool verificacao;
+    RESERVA r;
+    HOSPEDAGEM h;
+
+    verificacao = BuscarReservaID(id, &r);
+    if (verificacao == true)
+    {
+        h.id = r.id;
+        strcpy(h.CPF, r.CPF);
+        h.checkin = r.checkin;
+        h.checkout = r.checkout;
+        strcpy(h.status, "Ativa");
+        h.precoTotal = 0.0;
+        AlterarStatusQuarto(r.idQuarto, false);
+        GravarHospedagemCSV(h);
+        
+    } else {
+        printf("Reserva não encontrada\n");
+    }
+    
 }

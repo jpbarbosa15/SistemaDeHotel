@@ -44,4 +44,8 @@ int lerHospedagensCSV( HOSPEDAGEM *lista );
 */
 void exibirHospedagem(HOSPEDAGEM h);
 
+void checkinHospedagem(int id);
+
+void GravarHospedagemCSV(HOSPEDAGEM h);
+
 #endif
