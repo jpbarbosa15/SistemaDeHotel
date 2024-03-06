@@ -125,4 +125,23 @@ int lerReservasDAT(RESERVA *lista);
 */
 void listarQuartosDisponiveisComBaseNaData(DATA checkin, DATA checkout);
 
+/**
+* Rotina que cancela uma reserva com base no ID da reserva
+* @param id Identificação da reserva que será cancelada
+*/
+void cancelarReservaPorID(int id);
+
+/**
+ * Rotina que cancela uma reserva com base no CPF do cliente e na data de checkin
+ * @param cpf CPF do cliente que fez a reserva
+ * @param checkin Data de entrada do cliente
+*/
+void cancelarReservaPorCPFeDAta(char *cpf, DATA checkin);
+
+/**
+ * Rotina que lista as reservas de um cliente com base no CPF
+ * @param cpf CPF do cliente que fez a reserva
+*/
+void ListarReservaCliente(char *cpf);
+
 #endif

@@ -122,7 +122,7 @@ void menuClientes(){
 void menuReserva(){
         system("clear");
         int opcao = 0;
-        printf("1. Quartos Disponiveis Para Reserva\n2. Reservar Quarto\n3. Cancelar Reserva\n4. Buscar Reserva\n9. Sair\n");
+        printf("1. Quartos Disponiveis Para Reserva\n2. Reservar Quarto\n3. Cancelar Reserva Por Id\n4. Cancelar Reserva Por CPF e Checkin\n5. Buscar Reserva\n9. Sair\n");
         separador();
         printf("\nOpção -> ");
         scanf("%d", &opcao);
@@ -160,8 +160,29 @@ void menuReserva(){
             
             break;
         case 3:
+            system("clear");
+            int id;
+            printf("Digite o id da reserva para cancelar: ");
+            scanf("%d", &id);
+            cancelarReservaPorID(id);
             break;
         case 4:
+            system("clear");
+            char cpfDel[16], checkincharDel[50];
+            DATA checkinDel;
+            printf("Digite o CPF do cliente para cancelar a reserva: ");
+            scanf("%s", cpfDel);
+            printf("Digite a data de entrada (dd/mm/aaaa): ");
+            scanf("%s", checkincharDel);
+            StringToData(checkincharDel, &checkinDel);
+            cancelarReservaPorCPFeDAta(cpfDel, checkinDel);
+            break;
+        case 5:
+            system("clear");
+            char cpfBusca[16];
+            printf("Digite o CPF do cliente para buscar a reserva: ");
+            scanf("%s", cpfBusca);
+            ListarReservaCliente(cpfBusca);
             break;
         case 9:
             break;        

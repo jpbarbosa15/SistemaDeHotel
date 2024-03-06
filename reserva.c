@@ -152,6 +152,7 @@ int lerReservasCSV( RESERVA *lista )
 void exibirReserva(RESERVA r)
 {
    char temp[12];
+   printf("\n");
    printf("##################################### \n");
    printf("ID : %d\n",r.id);
    printf("-------------------------------------- \n");        
@@ -168,6 +169,7 @@ void exibirReserva(RESERVA r)
    printf("Status: %s\n", r.status);   
    printf("------------------------------------- \n");
    printf("##################################### \n");
+   printf("\n");
 }
 
 
@@ -417,3 +419,88 @@ void listarQuartosDisponiveisComBaseNaData(DATA checkin, DATA checkout)
     free(ReservadosNoPeriodo);
 }
     
+
+
+void cancelarReservaPorID(int id)
+{
+    RESERVA *lReservas;
+    bool verificador = false;
+    int qReservas = quantidadeReservasCSV();
+    lReservas = (RESERVA *) malloc(sizeof(RESERVA) * qReservas);
+    lerReservasCSV(lReservas);
+    remove("Reservas.csv");
+    for (int i = 0; i < qReservas; i++)
+    {
+        if (lReservas[i].id == id)
+        {
+            strcpy(lReservas[i].status, "cancelada");
+            gravarReservaCSV(lReservas[i]);
+            verificador = true;
+        } else {
+            gravarReservaCSV(lReservas[i]);
+        }
+    }
+    free(lReservas);
+    if (verificador == false)
+    {
+        printf("\nReserva não encontrada.\n\n");
+    }else {
+        printf("\nReserva cancelada com sucesso.\n\n");
+    }
+}
+
+
+
+void cancelarReservaPorCPFeDAta(char *cpf, DATA checkin)
+{
+    RESERVA *lReservas;
+    int qReservas = quantidadeReservasCSV();
+    bool verificador = false;
+    lReservas = (RESERVA *) malloc(sizeof(RESERVA) * qReservas);
+    lerReservasCSV(lReservas);
+    remove("Reservas.csv");
+    for (int i = 0; i < qReservas; i++)
+    {
+        if (strcmp(lReservas[i].CPF, cpf) == 0 && DataCmp(lReservas[i].checkin, checkin) == 0)
+        {
+            strcpy(lReservas[i].status, "cancelada");
+            gravarReservaCSV(lReservas[i]);
+            verificador = true;
+        } else {
+            gravarReservaCSV(lReservas[i]);
+        }
+    }
+    free(lReservas);
+    if (verificador == false)
+    {
+        printf("\nReserva não encontrada.\n\n");
+    }else {
+        printf("\nReserva cancelada com sucesso.\n\n");
+    }
+}
+
+
+
+void ListarReservaCliente(char *cpf)
+{
+    RESERVA *lReservas;
+    int verificador = 0;
+    int qReservas = quantidadeReservasCSV();
+    lReservas = (RESERVA *) malloc(sizeof(RESERVA) * qReservas);
+    lerReservasCSV(lReservas);
+    for (int i = 0; i < qReservas; i++)
+    {
+        if (strcmp(lReservas[i].CPF, cpf) == 0)
+        {
+            exibirReserva(lReservas[i]);
+            verificador++;
+        }
+    }
+
+    if (verificador == 0)
+    {
+        printf("\nCliente não possui reservas.\n\n");
+    } 
+    
+    free(lReservas);
+}
