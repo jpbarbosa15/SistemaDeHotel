@@ -1,5 +1,5 @@
 id;solteiro;casal;tipo;preço;status
-101;1;0;single;120.34;1
+102;1;0;single;120.34;1
 103;2;0;duplo;300.36;1
 201;2;1;single;120.34;1
 202;2;1;duplo;300.36;1
@@ -9,3 +9,4 @@ id;solteiro;casal;tipo;preço;status
 302;2;2;triplo;500.00;1
 303;3;2;triplo;500.00;1
 102;1;0;single;120.34;0
+101;1;0;single;120.34;0

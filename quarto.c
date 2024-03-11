@@ -374,3 +374,21 @@ void AlterarStatusQuarto(int id, bool status)
     free(lista);
     
 }
+
+
+QUARTO buscarQuartoID(int id){
+    QUARTO *lista;
+    int qtdQuartos = quantidadeQuartosCSV();
+    lista = (QUARTO *)malloc(qtdQuartos * sizeof(QUARTO));
+    lerQuartosCSV(lista);
+    QUARTO q;
+    for (int i = 0; i < qtdQuartos; i++)
+    {
+        if (lista[i].id == id)
+        {
+            q = lista[i];
+        }
+    }
+    free(lista);
+    return q;
+}

@@ -59,7 +59,7 @@ int lerHospedagensCSV(HOSPEDAGEM *lista)
             int campoAtual = 0;
             while (campos != NULL)
             {
-                printf(" %s\n", campos);
+                
                 switch (campoAtual)
                 {
                 case IDRESERVA_HOSPEDAGEM:
@@ -127,24 +127,27 @@ void GravarHospedagemCSV(HOSPEDAGEM h)
 {
     FILE *csv;
     char nomeArquivo[] = "Hospedagens.csv";
-    csv = fopen(nomeArquivo, "a");
-    if (csv != NULL)
+    csv = fopen(nomeArquivo, "r+w");
+    if (csv == NULL)
     {
-        char temp[12];
-        fprintf(csv, "%d;%s;", h.id, h.CPF);
-        DataToString(h.checkin, temp, false);
-        fprintf(csv, "%s;", temp);
-        DataToString(h.checkout, temp, false);
-        fprintf(csv, "%s;%s;%.2f\n", temp, h.status, h.precoTotal);
-        fclose(csv);
+        // arquivo não existe, será criado
+        csv = fopen(nomeArquivo, "a");
+        fprintf(csv,"idReserva;CPF;Checkin;Checkout;Status;Total\n");
+        fflush(csv);
+    }else{
+        fseek(csv, 0, SEEK_END);
     }
-    else
-    {
-        printf("Erro - Arquivo %s não encontrado\n", nomeArquivo);
-    }
+    //Arquivo ja existe
+    char temp[12];
+    fprintf(csv, "%d;%s;", h.id, h.CPF);
+    DataToString(h.checkin, temp, false);
+    fprintf(csv, "%s;", temp);
+    DataToString(h.checkout, temp, false);
+    fprintf(csv, "%s;%s;%.2f\n", temp, h.status, h.precoTotal);
+    fclose(csv);
+    
+    
 }
-
-
 
 void checkinHospedagem(int id)
 {
@@ -153,6 +156,7 @@ void checkinHospedagem(int id)
     HOSPEDAGEM h;
 
     verificacao = BuscarReservaID(id, &r);
+    exibirReserva(r);
     if (verificacao == true)
     {
         h.id = r.id;
@@ -166,6 +170,58 @@ void checkinHospedagem(int id)
         
     } else {
         printf("Reserva não encontrada\n");
+    }
+    
+}
+
+
+void checkoutHospedagemID(int id)
+{
+    
+    int verificacao = 0;
+    HOSPEDAGEM *lista;
+    int qtdHospedagens = quantidadeHospedagensCSV();
+    lista = (HOSPEDAGEM *)malloc(qtdHospedagens * sizeof(HOSPEDAGEM));
+    lerHospedagensCSV(lista);
+    remove("Hospedagens.csv");
+    for (int i = 0; i < qtdHospedagens; i++)
+    {
+        if (lista[i].id == id)
+        {
+            //Busca a reserva associada a Hospedagem por ID
+            RESERVA r;
+            BuscarReservaID(id,&r);
+            
+            //Busca o quarto associado com a reserva
+            QUARTO q = buscarQuartoID(r.idQuarto);
+            exibirQuarto(q);
+            //Calcula o valor total da hospedagem
+            int dias = DataDiff(lista[i].checkout, lista[i].checkin);
+            printf("Dias: %d\n", dias);
+            float valor = dias * q.valorDiaria;
+            
+            //Atualiza o valor da hospedagem
+            lista[i].precoTotal = valor;
+            
+            //Atualiza o status da hospedagem
+            strcpy(lista[i].status, "Finalizada");
+            GravarHospedagemCSV(lista[i]);
+            verificacao = 1;
+            
+        } else {
+            GravarHospedagemCSV(lista[i]);
+        }
+    }
+    free(lista);
+    if (verificacao == 1)
+    {
+        printf("\n");
+        printf("Checkout realizado com sucesso\n");
+        printf("\n");
+    } else {
+        printf("\n");
+        printf("Hospedagem não encontrada\n");
+        printf("\n");
     }
     
 }

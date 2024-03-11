@@ -48,4 +48,5 @@ void checkinHospedagem(int id);
 
 void GravarHospedagemCSV(HOSPEDAGEM h);
 
+void checkoutHospedagemID(int id);
 #endif

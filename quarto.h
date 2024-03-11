@@ -105,7 +105,18 @@ void AlterarQuarto(int id);
 */
 void deletarQuarto(int id);
 
-
+/**
+ * Altera o status de ocupação do quarto
+ * @param id Id do quarto que será alterado
+ * @param status Status que será alterado
+*/
 void AlterarStatusQuarto(int id, bool status);
+
+/**
+ * função que busca um Quarto pelo ID
+ * @param id Id do quarto que será buscado
+ * @return Retorna o quarto encontrado
+*/
+QUARTO buscarQuartoID(int id);
 
 #endif

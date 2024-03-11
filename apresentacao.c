@@ -32,6 +32,7 @@ int MenuPrincipal()
 
 void menuQuartos(){
     system("clear");
+    // system("cls");
     int opcao = 0;
     printf("1. Novo Quarto\n2. Alterar Quarto\n3. Deletar Quarto\n9. Sair\n");
     separador();
@@ -41,6 +42,7 @@ void menuQuartos(){
     {
     case 1:
         system("clear");
+        // system("cls");
         QUARTO q;
         lerQuarto(&q);
         gravarQuartoCSV(q);
@@ -50,6 +52,7 @@ void menuQuartos(){
     
     case 2:
         system("clear");
+        // system("cls");
         int id;
         printf("Digite o id do quarto para alterar: ");
         scanf("%d", &id);
@@ -58,6 +61,7 @@ void menuQuartos(){
 
     case 3:
         system("clear");
+        // system("cls");
         int idDel;
         printf("Digite o id do quarto para deletar: ");
         scanf("%d", &idDel);
@@ -73,6 +77,7 @@ void menuQuartos(){
 
 void menuClientes(){
     system("clear");
+    // system("cls");
     int opcao = 0;
     printf("1. Novo Cliente\n2. Alterar Cliente\n3. Deletar Cliente\n9. Sair\n");
     separador();
@@ -82,6 +87,7 @@ void menuClientes(){
     {
     case 1:
         system("clear");
+        // system("cls");
         CLIENTE c;
         lerCliente(&c);
         gravarClienteCSV(c);
@@ -91,6 +97,7 @@ void menuClientes(){
     
     case 2:
         system("clear");
+        // system("cls");
         char cpf[16];
         printf("Digite o CPF do cliente para alterar: ");
         scanf("%s", cpf);
@@ -102,6 +109,7 @@ void menuClientes(){
 
     case 3:
         system("clear");
+        // system("cls");
         char cpfDel[16];
         printf("Digite o CPF do cliente para deletar: ");
         scanf("%s", cpfDel);
@@ -122,6 +130,7 @@ void menuClientes(){
 
 void menuReserva(){
         system("clear");
+        // system("cls");
         int opcao = 0;
         printf("1. Quartos Disponiveis Para Reserva\n2. Reservar Quarto\n3. Cancelar Reserva Por Id\n4. Cancelar Reserva Por CPF e Checkin\n5. Buscar Reserva\n9. Sair\n");
         separador();
@@ -131,6 +140,7 @@ void menuReserva(){
         {
         case 1:
             system("clear");
+            // system("cls");
             DATA entrada, saida;
             printf("Digite a data de entrada (dd/mm/aaaa): ");
             scanf("%d/%d/%d", &entrada.dia, &entrada.mes, &entrada.ano);
@@ -140,6 +150,7 @@ void menuReserva(){
             break;
         case 2:
             system("clear");
+            // system("cls");
             RESERVA r;
             char cpf[16], tipoquarto[10], checkinchar[50], checkoutchar[50];
             DATA checkin, checkout;
@@ -162,6 +173,7 @@ void menuReserva(){
             break;
         case 3:
             system("clear");
+            // system("cls");
             int id;
             printf("Digite o id da reserva para cancelar: ");
             scanf("%d", &id);
@@ -169,6 +181,7 @@ void menuReserva(){
             break;
         case 4:
             system("clear");
+            // system("cls");
             char cpfDel[16], checkincharDel[50];
             DATA checkinDel;
             printf("Digite o CPF do cliente para cancelar a reserva: ");
@@ -180,6 +193,7 @@ void menuReserva(){
             break;
         case 5:
             system("clear");
+            // system("cls");
             char cpfBusca[16];
             printf("Digite o CPF do cliente para buscar a reserva: ");
             scanf("%s", cpfBusca);
@@ -195,6 +209,7 @@ void menuReserva(){
 
 void menuHospedagem(){
     system("clear");
+    // system("cls");
     int opcao = 0;
     printf("1. Checkin\n2. Checkout\n3. Buscar Hospedagens\n9. Sair\n");
     separador();
@@ -204,13 +219,19 @@ void menuHospedagem(){
     {
     case 1:
         system("clear");
+        // system("cls");
         int id;
         printf("Digite o id da reserva para fazer o checkin: ");
         scanf("%d", &id);
         checkinHospedagem(id);
         break;
     case 2:
-        
+        system("clear");
+        // system("cls");
+        int idCheckout;
+        printf("Digite o id da reserva para fazer o checkout: ");
+        scanf("%d", &idCheckout);
+        checkoutHospedagemID(idCheckout);
         break;
     case 3:
         

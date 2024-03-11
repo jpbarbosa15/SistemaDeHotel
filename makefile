@@ -6,7 +6,7 @@ hotelTeste: tempo.o main.o quarto.o apresentacao.o reserva.o hospedagem.o client
 # Compilador faz a ligação entre os dois arquivos obj 
 # 	e gera o executável
 #gcc -o hotelPrototipo main.o quarto.o apresentacao.o tempo.o cliente.o -ggdb
-	gcc -o hotelPrototipo main.o quarto.o cliente.o tempo.o apresentacao.o reserva.o hospedagem.o  -lm -ggdb
+	gcc -o SistemaHotel main.o quarto.o cliente.o tempo.o apresentacao.o reserva.o hospedagem.o  -lm -ggdb
 
 cliente.o: cliente.c cliente.h
 	gcc -o cliente.o -c cliente.c -Wall -ggdb
