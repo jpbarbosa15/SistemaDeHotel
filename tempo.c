@@ -125,15 +125,7 @@ int DataCmp(DATA d1, DATA d2)
 }
 
 
-/**
- * Retorna a diferença em dias entre duas datas
- * @param d1 variável do tipo DATA para comparação
- * @param d2 variável do tipo DATA para comparação
- * @return Retorna um valor inteiro que corresponde diferença de dias. 
- * Quando a data d2 é mais antiga que d1, retorna um valor positivo 
- * e negativo caso contrário;
- * 
-*/
+
 int DataDiff(DATA d2, DATA d1)
 {
     struct tm d1_tm, d2_tm ;
@@ -163,6 +155,64 @@ int DataDiff(DATA d2, DATA d1)
     return dias;
 }
 
+
+
+int diferencaDiasDatas(DATA checkin,DATA checkout){
+    int diferenca;
+    
+    
+    if (checkin.mes == checkout.mes)
+    {
+        diferenca = checkout.dia - checkin.dia;
+        return diferenca;
+    }else
+    {
+        switch (checkin.mes)
+        {
+            case 1:
+                diferenca = 31 - checkin.dia + checkout.dia;
+                break;
+            case 2:
+                diferenca = 28 - checkin.dia + checkout.dia;
+                break;
+            case 3:
+                diferenca = 31 - checkin.dia + checkout.dia;
+                break;
+            case 4:
+                diferenca = 30 - checkin.dia + checkout.dia;
+                break;
+            case 5:
+                diferenca = 31 - checkin.dia + checkout.dia;
+                break;
+            case 6:
+                diferenca = 30 - checkin.dia + checkout.dia;
+                break;
+            case 7:
+                diferenca = 31 - checkin.dia + checkout.dia;
+                break;
+            case 8:
+                diferenca = 31 - checkin.dia + checkout.dia;
+                break;
+            case 9:
+                diferenca = 30 - checkin.dia + checkout.dia;
+                break;
+            case 10:
+                diferenca = 31 - checkin.dia + checkout.dia;
+                break;
+            case 11:
+                diferenca = 30 - checkin.dia + checkout.dia;
+                break;
+            case 12:
+                diferenca = 31 - checkin.dia + checkout.dia;
+                break;
+            default:
+                break;
+        }
+        return diferenca;
+    }
+    
+
+}
 
 
 

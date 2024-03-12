@@ -61,8 +61,10 @@ int DataCmp(DATA d1, DATA d2);
  * Quando a data d2 é mais antiga que d1, retorna um valor negativo;
  * 
 */
-int DataDiff(DATA d1, DATA d2);
+int DataDiff(DATA d2, DATA d1);
 
+
+int diferencaDiasDatas(DATA checkin,DATA checkout);
 
 #endif
   

@@ -6,6 +6,7 @@
 #include "tempo.h"
 #include "reserva.h"
 #include "quarto.h"
+#include "time.h"
 
 int quantidadeHospedagensCSV()
 {
@@ -196,8 +197,7 @@ void checkoutHospedagemID(int id)
             QUARTO q = buscarQuartoID(r.idQuarto);
             exibirQuarto(q);
             //Calcula o valor total da hospedagem
-            int dias = DataDiff(lista[i].checkout, lista[i].checkin);
-            printf("Dias: %d\n", dias);
+            int dias = diferencaDiasDatas(lista[i].checkin,lista[i].checkout);
             float valor = dias * q.valorDiaria;
             
             //Atualiza o valor da hospedagem
@@ -224,4 +224,105 @@ void checkoutHospedagemID(int id)
         printf("\n");
     }
     
+}
+
+
+
+void checkoutHospedagemIDQuarto(int idQuarto){
+    int verificacao = 0;
+    int codigoReserva;
+    RESERVA *lista;
+    // Busca uma lista das reservas no arquivos reservas.csv
+    int qtdReservas = quantidadeReservasCSV();
+    lista = (RESERVA *)malloc(qtdReservas * sizeof(RESERVA));
+    lerReservasCSV(lista);
+    
+    //Verifica se o quarto esta associado a alguma reserva e se estiver armazena o id da reserva
+    for (int i = 0; i < qtdReservas; i++)
+    {
+        if (lista[i].idQuarto == idQuarto)
+        {
+            codigoReserva = lista[i].id;
+            verificacao = 1;            
+        }
+    }
+    free(lista);
+
+    if (verificacao == 1 )
+    {   
+        //Cria a lista com todas as hospedagens e remove o arquivo hospedagens.csv 
+        //Altera a hospedagem que vai ser cancelada
+        //Salva todas as hospedagens no arquivo de novo
+        HOSPEDAGEM *listaHospedagem;
+        int qtdHospedagens = quantidadeHospedagensCSV();
+        listaHospedagem = (HOSPEDAGEM *)malloc(qtdHospedagens * sizeof(HOSPEDAGEM));
+        lerHospedagensCSV(listaHospedagem);
+        remove("Hospedagens.csv");
+
+        //Verifica a lista e altera a hospedagem que vai ser cancelada
+        for (int i = 0; i < qtdHospedagens; i++)
+        {
+            if (listaHospedagem[i].id == codigoReserva)
+            {
+                //calcula o valor total da hospedagem
+                QUARTO q = buscarQuartoID(idQuarto);
+                int dias = diferencaDiasDatas(listaHospedagem[i].checkin,listaHospedagem[i].checkout);
+                float valor = dias * q.valorDiaria;
+                //altera o valor da hospedagem 
+                listaHospedagem[i].precoTotal = valor;
+                //altera o status da hospedagem
+                strcpy(listaHospedagem[i].status, "Finalizada");
+                //salva a hospedagem no arquivo
+                GravarHospedagemCSV(listaHospedagem[i]);
+                
+                printf("\n");
+                printf("Hospedagem Finalizada com sucesso\n");
+                printf("\n");
+                
+            } else {
+                GravarHospedagemCSV(listaHospedagem[i]);
+            }
+        }
+        free(listaHospedagem);
+
+    }else{
+        printf("\n");
+        printf("Hospedagem não encontrada\n");
+        printf("\n");
+    }
+    
+
+}
+
+
+void ListarHospedagensCliente(char *CPF)
+{
+    int contador = 0;
+    HOSPEDAGEM *lista;
+    int qtdHospedagens = quantidadeHospedagensCSV();
+    lista = (HOSPEDAGEM *)malloc(qtdHospedagens * sizeof(HOSPEDAGEM));
+    lerHospedagensCSV(lista);
+    for (int i = 0; i < qtdHospedagens; i++)
+    {
+        if (strcmp(lista[i].CPF, CPF) == 0)
+        {
+            char temp[12];
+            printf("##################################### \n");
+            printf("ID : %d\n",lista[i].id);
+            DataToString(lista[i].checkin, temp, false);
+            printf("Check in: %s\n", temp);   
+            printf("------------------------------------- \n");
+            DataToString(lista[i].checkout, temp, false);
+            printf("Check out: %s\n", temp);   
+            printf("------------------------------------- \n");
+            printf("Valor total: R$%.2f\n", lista[i].precoTotal);
+            contador++;   
+        }
+    }
+    free(lista);
+    if(contador == 0){
+        printf("\n");
+        printf("Nenhuma hospedagem encontrada\n");
+        printf("\n");
+    }
 }

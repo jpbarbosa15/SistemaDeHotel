@@ -14,12 +14,22 @@ void separador();
 */
 int MenuPrincipal();
 
+/**
+ * Gera o menu de quartos e realizada a rotina escolhida pelo usuario
+*/
 void menuQuartos();
-
+/**
+ * Gera o menu de clientes e realizada a rotina escolhida pelo usuario
+*/
 void menuClientes();
 
+/**
+ * Gera o menu de reservas e realizada a rotina escolhida pelo usuario
+*/
 void menuReserva();
-
+/**
+ * Gera o menu de hospedagem e realizada a rotina escolhida pelo usuario
+*/
 void menuHospedagem();
 
 #endif

@@ -132,7 +132,7 @@ void menuReserva(){
         system("clear");
         // system("cls");
         int opcao = 0;
-        printf("1. Quartos Disponiveis Para Reserva\n2. Reservar Quarto\n3. Cancelar Reserva Por Id\n4. Cancelar Reserva Por CPF e Checkin\n5. Buscar Reserva\n9. Sair\n");
+        printf("1. Quartos Disponiveis Para Reserva\n2. Reservar Quarto\n3. Cancelar Reserva Por Id\n4. Cancelar Reserva Por CPF e Data do Checkin\n5. Buscar Reserva\n9. Sair\n");
         separador();
         printf("\nOpção -> ");
         scanf("%d", &opcao);
@@ -211,7 +211,7 @@ void menuHospedagem(){
     system("clear");
     // system("cls");
     int opcao = 0;
-    printf("1. Checkin\n2. Checkout\n3. Buscar Hospedagens\n9. Sair\n");
+    printf("1. Checkin\n2. Checkout Por Codigo Da Reserva\n3. Checkout Por Codigo do Quarto \n4. Buscar Hospedagens\n9. Sair\n");
     separador();
     printf("\nOpção -> ");
     scanf("%d", &opcao);
@@ -229,12 +229,25 @@ void menuHospedagem(){
         system("clear");
         // system("cls");
         int idCheckout;
-        printf("Digite o id da reserva para fazer o checkout: ");
+        printf("Digite o codigo da reserva para fazer o checkout: ");
         scanf("%d", &idCheckout);
         checkoutHospedagemID(idCheckout);
         break;
     case 3:
-        
+        system("clear");
+        // system("cls");
+        int idQuarto;
+        printf("Digite o codigo do quarto para fazer o checkout: ");
+        scanf("%d", &idQuarto);
+        checkoutHospedagemIDQuarto(idQuarto);
+        break;
+    case 4:
+        system("clear");
+        // system("cls");
+        char cpfBusca[16];
+        printf("Digite o CPF do cliente para buscar a hospedagem: ");
+        scanf("%s", cpfBusca);
+        ListarHospedagensCliente(cpfBusca);
         break;
     case 9:
         break;        

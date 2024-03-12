@@ -44,9 +44,34 @@ int lerHospedagensCSV( HOSPEDAGEM *lista );
 */
 void exibirHospedagem(HOSPEDAGEM h);
 
+
+/**
+ * Rotina que faz o checkin do cliente pelo ID da Reserva
+ * @param id Identificação da reserva
+*/
 void checkinHospedagem(int id);
 
+/**
+ * Grava os dados de uma hospedagem no arquivo CSV
+ * @param h Variável com os dados da hospedagem
+*/
 void GravarHospedagemCSV(HOSPEDAGEM h);
 
+/**
+ * Rotina que faz o chekout do cliente pelo ID da Reserva
+ * @param id Identificação da reserva
+*/
 void checkoutHospedagemID(int id);
+
+/**
+ * Rotina que faz o chekout do cliente pelo ID do Quarto
+ * @param idQuarto Identificação do quarto
+*/
+void checkoutHospedagemIDQuarto(int idQuarto);
+
+/**
+ * Lista todas as hospedagens de um cliente
+ * @param CPF CPF do cliente
+*/
+void ListarHospedagensCliente(char *CPF);
 #endif
